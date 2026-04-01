@@ -29,7 +29,7 @@ https://api.kodzero.pro/v1/:project/:collection
 Для защищённых методов (scope: `User` или `Workspace`) требуется токен авторизации:
 
 ```http
-Authorization: <token>
+Authorization: Bearer <token>
 ```
 
 Токен получается при аутентификации пользователя.

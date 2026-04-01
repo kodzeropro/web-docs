@@ -16,8 +16,8 @@
   --custom-tip-border: rgba(173, 173, 173, 0.3);
   /* vitepress vars */
   --vp-c-brand-1: var(--ui-color-primary-500);
-  --vp-c-brand-3: var(--ui-color-primary-400);
   --vp-c-brand-2: var(--ui-color-primary-300);
+  --vp-c-brand-3: var(--ui-color-primary-400);
   --vp-c-brand-soft: rgba(251, 44, 54, 0.15);
   --vp-c-brand-soft-50: rgba(251, 44, 54, 0.5);
 }
@@ -123,15 +123,26 @@ div.custom-block.danger .custom-block-title {
   color: var(--vp-c-brand-3) !important;
 }
 
+.VPButton {
+  border-radius: 6px !important;
+}
+
+.VPButton:not(.alt) {
+  
+  background-color: var(--ui-color-primary-500) !important;
+  border: 1px solid var(--ui-color-primary-500) !important;
+  color: var(--vp-c-white) !important;
+}
+
 /* Dark mode adjustment */
 .dark {
   /* custom vars */
   --custom-border: rgb(26, 35, 58);
   --custom-tip-border: var(--custom-border);
   /* vitepress vars */
-  --vp-c-brand-1: var(--ui-color-primary-400);
+  --vp-c-brand-1: var(--ui-color-primary-500);
+  --vp-c-brand-2: var(--ui-color-primary-400);
   --vp-c-brand-3: var(--ui-color-primary-300);
-  --vp-c-brand-2: var(--ui-color-primary-200);
   --vp-c-default-soft: rgba(1, 7, 23, 0.15);
   --vp-c-brand-soft: rgba(251, 44, 54, 0.35);
   --vp-c-brand-soft-50: rgba(251, 44, 54, 0.7);
@@ -155,9 +166,21 @@ div.custom-block.danger .custom-block-title {
   border-color: var(--custom-border);
 }
 
+.dark .VPButton {
+  background-color: var(--ui-color-primary-400) !important;
+  border: 1px solid var(--vp-c-brand) !important;
+  color: var(--vp-c-bg) !important;
+}
+
+.dark .VPButton:hover {
+  background-color: var(--ui-color-primary-400) !important;
+  border: 1px solid var(--ui-color-primary-400) !important;
+}
+
 .dark .VPButton.alt {
   background-color: var(--vp-cp-bg) !important;
-  border: 1px solid var(--vp-c-brand-2) !important;
+  border: 1px solid var(--ui-color-primary-400) !important;
+  color: var(--ui-color-primary-400) !important;
 }
 
 .dark .VPButton.alt:hover {

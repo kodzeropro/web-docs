@@ -149,7 +149,6 @@ SDK: Kodzero BaaS
 #### 1. Предоставляйте пример записи
 
 ```ts
-// kitten record example
-// { "_id": "694d2de72f69bc65a83c42ce", "name": "Fluffy", "age": 2}
-
+// record example
+// { "_id": "694d2de72f69bc65a83c42ce", "number": "INV-2026-014", "status": "sent", "total": 12500 }
 ```

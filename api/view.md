@@ -24,8 +24,8 @@ GET https://api.kodzero.pro/v1/:project/:collection/:id
 {
   "ok": true,
   "result": {
-    "_id": "abc123",
-    "title": "iPhone 15",
+    "_id": "69c156e129d4e3fab000a264",
+    "title": "Футболка",
     "price": 999,
     "createdAt": "2025-01-15T10:30:00Z",
     "updatedAt": "2025-01-15T10:30:00Z"

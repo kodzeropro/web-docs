@@ -22,7 +22,7 @@ GET /v1/:project/:collection
 ## Пример запроса
 
 ```http
-GET https://api.kodzero.pro/v1/:project/:collection?search=phone&page=1&perPage=10&sort=-price&fields=title,price
+GET https://api.kodzero.pro/v1/:project/:collection?search=футб&page=1&perPage=10&sort=-price&fields=title,price
 ```
 
 ## Ответ
@@ -37,9 +37,9 @@ GET https://api.kodzero.pro/v1/:project/:collection?search=phone&page=1&perPage=
     "totalPages": 5,
     "found": [
       {
-        "_id": "abc123",
-        "title": "iPhone 15",
-        "price": 999,
+        "_id": "69c156e129d4e3fab000a215",
+        "title": "Футболка",
+        "price": 1499.99,
         "createdAt": "2025-01-15T10:30:00Z",
         "updatedAt": "2025-01-15T10:30:00Z"
       }
@@ -118,15 +118,15 @@ GET /v1/:project/:collection?fields=title,price,_id
 
 Параметр `include` позволяет включить связанные записи в один запрос.
 
-Допустим, в коллекции есть поля типа **Связь**:
+Допустим, в коллекции `products` есть поля типа **Связь**, которая ссылается на элементы другой коллекции:
 - `category` — связь типа **single** (одна категория)
 - `tags` — связь типа **multiple** (несколько тегов)
 
 ```http
-# Включить категорию
+# Прикрепить к ответу данные, связанной с товаром категории
 GET /v1/:project/:collection?include=category
 
-# Включить несколько связей
+# Прикрепить к ответу данные, связанных полей category и tags
 GET /v1/:project/:collection?include=category,tags
 ```
 
@@ -138,11 +138,11 @@ GET /v1/:project/:collection?include=category,tags
     "found": [...],
     "_include": {
       "category": [
-        { "_id": "cat1", "name": "Electronics" }
+        { "_id": "69c15092b84300bed74c5610", "name": "Одежда" }
       ],
       "tags": [
-        { "_id": "tag1", "name": "Mobile" },
-        { "_id": "tag2", "name": "Apple" }
+        { "_id": "69b920b41473230166d911bf", "name": "Новинка" },
+        { "_id": "69c156e129d4e3fab000a265", "name": "Оверсайз" }
       ]
     }
   }
@@ -161,10 +161,10 @@ GET /v1/:project/:collection?include=category,tags
 
 ```http
 # Поиск по имени
-GET /v1/:project/:collection?name=apple
+GET /v1/:project/:collection?title=футболка
 
 # Поиск по цене
-GET /v1/:project/:collection?price=999
+GET /v1/:project/:collection?price=1499.99
 ```
 
 ### Тип поля: Текст
@@ -172,10 +172,10 @@ GET /v1/:project/:collection?price=999
 Для текстовых полей поддерживается поиск по нескольким значениям (логическое ИЛИ):
 
 ```http
-# Поиск товаров с названием "apple" ИЛИ "samsung"
-GET /v1/:project/:collection?brand=apple,samsung
+# Поиск товаров, brand которых "фэшн" ИЛИ "дитейлз"
+GET /v1/:project/:collection?brand=фэшн,дитейлз
 
-# Поиск по статусу "active" ИЛИ "draft"
+# Поиск записей по значению поля status: "active" ИЛИ "draft"
 GET /v1/:project/:collection?status=active,draft
 ```
 
@@ -230,8 +230,8 @@ GET /v1/:project/:collection?language=english,russian
 Можно комбинировать несколько фильтров (логическое И):
 
 ```http
-# Активные товары бренда Apple с ценой 999
-GET /v1/:project/:collection?active=true&brand=apple&price=999
+# Активные товары [active=true] бренда Banana [brand=banana] с ценой 999 [price=999]
+GET /v1/:project/:collection?active=true&brand=banana&price=999
 ```
 
 ### Ограничения бета-версии

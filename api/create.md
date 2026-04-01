@@ -15,7 +15,7 @@ JSON-объект с полями в соответствии со схемой 
 
 ```json
 {
-  "title": "iPhone 15",
+  "title": "Футболка",
   "price": 999
 }
 ```
@@ -27,7 +27,7 @@ POST https://api.kodzero.pro/v1/:project/:collection
 Content-Type: application/json
 
 {
-  "title": "iPhone 15",
+  "title": "Футболка",
   "price": 999
 }
 ```
@@ -38,8 +38,8 @@ Content-Type: application/json
 {
   "ok": true,
   "result": {
-    "_id": "abc123",
-    "title": "iPhone 15",
+    "_id": "69c156e129d4e3fab000a265",
+    "title": "Футболка",
     "price": 999,
     "createdAt": "2025-01-15T10:30:00Z",
     "updatedAt": "2025-01-15T10:30:00Z"
@@ -74,7 +74,7 @@ Content-Type: application/json
 
 ```http
 POST /v1/:project/:collection
-Authorization: <token>
+Authorization: Bearer <token>
 Content-Type: application/json
 
 {

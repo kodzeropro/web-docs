@@ -35,8 +35,8 @@ const kodzero = new Kodzero({
 Название коллекции в базе данных, которая хранит данные пользователей и используется для аутентификации:
 
 ```js
-authCollection: 'auth'     // обычно используется 'auth'
-authCollection: 'users'    // или 'users', в зависимости от настройки
+authCollection: '10099'
+authCollection: '10101'
 ```
 
 ### Структура экземпляра Kodzero

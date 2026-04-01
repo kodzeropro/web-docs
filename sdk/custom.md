@@ -7,36 +7,36 @@ Kodzero SDK позволяет расширять модели собствен�
 Используйте статический метод `registerMethod()` для добавления кастомных методов к модели:
 
 ```js
-Kitten.registerMethod('methodName', function() {
-  // Внутри метода доступен this — экземпляр модели
-  const data = this.data()
-  // ...
+Invoice.registerMethod('markAsPaid', async function() {
+  this.set('status', 'paid')
+  this.set('paidAt', new Date())
+  await this.update()
 })
 ```
 
 ## Простой пример
 
 ```ts
-interface Kitten {
+interface Invoice {
   _id: string | null
-  name: string
-  color: string
-  age: number
+  number: string
+  customerName: string
+  total: number
 }
 
-const Kitten = kodzero.createModel<Kitten>({
-  collection: 'kittens'
+const Invoice = kodzero.createModel<Invoice>({
+  collection: 'invoices'
 })
 
 // Регистрируем кастомный метод
-Kitten.registerMethod('getDescription', function() {
+Invoice.registerMethod('getSummary', function() {
   const data = this.data()
-  return `${data.name} (${data.color}, ${data.age} мес.)`
+  return `Счёт ${data.number} для ${data.customerName} на ${data.total} ₽`
 })
 
 // Использование
-const kitten = await Kitten.get('kitten_id')
-console.log(kitten.getDescription()) // "Барсик (серый, 3 мес.)"
+const invoice = await Invoice.get('69c15092b84300bed74c5610')
+console.log(invoice.getSummary()) // "Счёт INV-2026-014 для ООО Ромашка на 12500 ₽"
 ```
 
 ## Типизация кастомных методов
@@ -45,47 +45,47 @@ console.log(kitten.getDescription()) // "Барсик (серый, 3 мес.)"
 
 ```ts
 // Интерфейс данных
-interface Kitten {
+interface Invoice {
   _id: string | null
-  name: string
-  color: string
-  age: number
-  weight: number
+  number: string
+  customerName: string
+  total: number
+  status: 'draft' | 'sent' | 'paid'
 }
 
 // Интерфейс кастомных методов
-interface KittenMethods {
-  getDescription: () => string
-  isAdult: () => boolean
-  applyWeightGain: (grams: number) => number
+interface InvoiceMethods {
+  getSummary: () => string
+  isPaid: () => boolean
+  applyDiscount: (percent: number) => number
 }
 
 // Создаём модель с обоими типами
-const Kitten = kodzero.createModel<Kitten, KittenMethods>({
-  collection: 'kittens'
+const Invoice = kodzero.createModel<Invoice, InvoiceMethods>({
+  collection: 'invoices'
 })
 
 // Регистрируем методы
-Kitten.registerMethod('getDescription', function() {
+Invoice.registerMethod('getSummary', function() {
   const data = this.data()
-  return `${data.name} (${data.color}, ${data.age} мес.)`
+  return `Счёт ${data.number} для ${data.customerName}`
 })
 
-Kitten.registerMethod('isAdult', function() {
-  return this.data().age >= 12
+Invoice.registerMethod('isPaid', function() {
+  return this.data().status === 'paid'
 })
 
-Kitten.registerMethod('applyWeightGain', function(grams: number) {
-  const weight = this.data().weight
-  return weight + grams
+Invoice.registerMethod('applyDiscount', function(percent: number) {
+  const total = this.data().total
+  return total - (total * percent / 100)
 })
 
 // Теперь TypeScript знает о кастомных методах
-const kitten = await Kitten.get('kitten_id')
-kitten.getDescription()      // ✅ TypeScript знает тип возвращаемого значения
-kitten.isAdult()            // ✅
-kitten.applyWeightGain(200) // ✅
-// kitten.unknownMethod()   // ❌ Ошибка компиляции
+const invoice = await Invoice.get('invoice_id')
+invoice.getSummary()      // ✅ TypeScript знает тип возвращаемого значения
+invoice.isPaid()         // ✅
+invoice.applyDiscount(10) // ✅
+// invoice.unknownMethod() // ❌ Ошибка компиляции
 ```
 
 ## Практические примеры
@@ -93,134 +93,132 @@ kitten.applyWeightGain(200) // ✅
 ### Форматирование данных
 
 ```ts
-interface Kitten {
+interface Customer {
   _id: string | null
-  name: string
-  breed: string
-  color: string
+  firstName: string
+  lastName: string
+  phone: string
 }
 
-interface KittenMethods {
+interface CustomerMethods {
   getFullName: () => string
   getInitials: () => string
-  formatBreed: () => string
+  formatPhone: () => string
 }
 
-const Kitten = kodzero.createModel<Kitten, KittenMethods>({
-  collection: 'kittens'
+const Customer = kodzero.createModel<Customer, CustomerMethods>({
+  collection: 'customers'
 })
 
-Kitten.registerMethod('getFullName', function() {
-  const { name, breed } = this.data()
-  return `${name} (${breed})`
+Customer.registerMethod('getFullName', function() {
+  const { firstName, lastName } = this.data()
+  return `${firstName} ${lastName}`
 })
 
-Kitten.registerMethod('getInitials', function() {
-  const { name, breed } = this.data()
-  return `${name[0]}${breed[0]}`.toUpperCase()
+Customer.registerMethod('getInitials', function() {
+  const { firstName, lastName } = this.data()
+  return `${firstName[0]}${lastName[0]}`.toUpperCase()
 })
 
-Kitten.registerMethod('formatBreed', function() {
-  return this.data().breed.toLowerCase()
+Customer.registerMethod('formatPhone', function() {
+  const digits = this.data().phone.replace(/\D/g, '')
+  return `+${digits}`
 })
 ```
 
 ### Вычисляемые свойства
 
 ```ts
-interface Kitten {
+interface Order {
   _id: string | null
-  toys: Array<{ name: string; price: number; quantity: number }>
-  discount: number
+  items: Array<{ title: string; price: number; quantity: number }>
+  discountPercent: number
 }
 
-interface KittenMethods {
-  getToysSubtotal: () => number
-  getDiscount: () => number
-  getToysTotal: () => number
-  getToyCount: () => number
+interface OrderMethods {
+  getSubtotal: () => number
+  getDiscountAmount: () => number
+  getTotal: () => number
+  getItemCount: () => number
 }
 
-const Kitten = kodzero.createModel<Kitten, KittenMethods>({
-  collection: 'kittens'
+const Order = kodzero.createModel<Order, OrderMethods>({
+  collection: 'orders'
 })
 
-Kitten.registerMethod('getToysSubtotal', function() {
-  return this.data().toys.reduce((sum, toy) => {
-    return sum + (toy.price * toy.quantity)
+Order.registerMethod('getSubtotal', function() {
+  return this.data().items.reduce((sum, item) => {
+    return sum + (item.price * item.quantity)
   }, 0)
 })
 
-Kitten.registerMethod('getDiscount', function() {
-  const subtotal = this.getToysSubtotal()
-  return subtotal * (this.data().discount / 100)
+Order.registerMethod('getDiscountAmount', function() {
+  const subtotal = this.getSubtotal()
+  return subtotal * (this.data().discountPercent / 100)
 })
 
-Kitten.registerMethod('getToysTotal', function() {
-  return this.getToysSubtotal() - this.getDiscount()
+Order.registerMethod('getTotal', function() {
+  return this.getSubtotal() - this.getDiscountAmount()
 })
 
-Kitten.registerMethod('getToyCount', function() {
-  return this.data().toys.reduce((count, toy) => count + toy.quantity, 0)
+Order.registerMethod('getItemCount', function() {
+  return this.data().items.reduce((count, item) => count + item.quantity, 0)
 })
 
 // Использование
-const kitten = await Kitten.get('kitten_id')
-console.log('Подитог:', kitten.getToysSubtotal())
-console.log('Скидка:', kitten.getDiscount())
-console.log('Итого:', kitten.getToysTotal())
-console.log('Игрушек:', kitten.getToyCount())
+const order = await Order.get('order_id')
+console.log('Подитог:', order.getSubtotal())
+console.log('Скидка:', order.getDiscountAmount())
+console.log('Итого:', order.getTotal())
+console.log('Товаров:', order.getItemCount())
 ```
 
 ### Бизнес-логика
 
 ```ts
-interface Kitten {
+interface Task {
   _id: string | null
-  name: string
-  status: 'sleeping' | 'playing' | 'eating'
-  age: number
-  favoriteFood: string
+  title: string
+  status: 'new' | 'in_progress' | 'done'
+  priority: 'low' | 'medium' | 'high'
+  dueDate: string | null
 }
 
-interface KittenMethods {
-  isSleeping: () => boolean
-  isAdult: () => boolean
-  canPlay: () => boolean
+interface TaskMethods {
+  isExpired: () => boolean
+  requiresAttention: () => boolean
   getStatusLabel: () => string
 }
 
-const Kitten = kodzero.createModel<Kitten, KittenMethods>({
-  collection: 'kittens'
+const Task = kodzero.createModel<Task, TaskMethods>({
+  collection: 'tasks'
 })
 
-Kitten.registerMethod('isSleeping', function() {
-  return this.data().status === 'sleeping'
+Task.registerMethod('isExpired', function() {
+  const { dueDate, status } = this.data()
+  return Boolean(dueDate) && status !== 'done' && new Date(dueDate) < new Date()
 })
 
-Kitten.registerMethod('isAdult', function() {
-  return this.data().age >= 12
+Task.registerMethod('requiresAttention', function() {
+  return this.data().priority === 'high' || this.isOverdue()
 })
 
-Kitten.registerMethod('canPlay', function() {
-  return this.data().status !== 'sleeping'
-})
-
-Kitten.registerMethod('getStatusLabel', function() {
+Task.registerMethod('getStatusLabel', function() {
   const labels = {
-    sleeping: 'Спит',
-    playing: 'Играет',
-    eating: 'Кушает'
+    new: 'Новая',
+    in_progress: 'В работе',
+    done: 'Завершена'
   }
+  
   return labels[this.data().status]
 })
 
 // Использование
-const kittens = await Kitten.findMany()
-const sleepingKittens = []
-for (const kittenData of kittens) {
-  const kitten = await Kitten.get(kittenData._id)
-  if (kitten.isSleeping()) sleepingKittens.push(kitten)
+const tasks = await Task.findMany()
+const urgentTasks = []
+for (const taskData of tasks) {
+  const task = await Task.get(taskData._id)
+  if (task.requiresAttention()) urgentTasks.push(task)
 }
 ```
 
@@ -236,36 +234,37 @@ for (const kittenData of kittens) {
 - `this.validate()` — валидировать данные
 
 ```ts
-interface Kitten {
+interface Invoice {
   _id: string | null
-  name: string
-  food: string
-  weight: number
+  status: 'draft' | 'sent' | 'paid'
+  paidAt: string | null
+  comment: string | null
 }
 
-interface KittenMethods {
-  feed: (food: string, grams: number) => Promise<void>
-  isHungry: () => boolean
+interface InvoiceMethods {
+  markAsPaid: (paidAt?: string) => Promise<void>
+  canBePaid: () => boolean
 }
 
-const Kitten = kodzero.createModel<Kitten, KittenMethods>({
-  collection: 'kittens'
+const Invoice = kodzero.createModel<Invoice, InvoiceMethods>({
+  collection: 'invoices'
 })
 
-Kitten.registerMethod('feed', async function(food: string, grams: number) {
-  this.set('food', food)
-  this.set('weight', this.data().weight + grams)
+Invoice.registerMethod('markAsPaid', async function() {
+  this.set('status', 'paid')
+  this.set('paidAt', new Date())
+  this.set('comments', 'Оплата подтверждена автоматически')
   await this.update()
 })
 
-Kitten.registerMethod('isHungry', function() {
-  return this.data().weight < 2000 // например, меньше 2 кг
+Invoice.registerMethod('canBePaid', function() {
+  return this.data().status === 'sent'
 })
 
 // Использование
-const kitten = await Kitten.get('kitten_id')
+const invoice = await Invoice.get('69b91c2e39911ade31e65750')
 
-if (kitten.isHungry()) {
-  await kitten.feed('корм', 100)
+if (invoice.canBePaid()) {
+  await invoice.markAsPaid()
 }
 ```

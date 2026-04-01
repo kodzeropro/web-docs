@@ -8,14 +8,30 @@ declare module 'vitepress' {
     }
 }
 
+const seoContent = {
+    title: 'Документация | Kodzero Docs',
+    description: 'Платформа для создания бэкенда за минуты. Визуальный конструктор, готовый REST API и админ-панель. Просто подключите фронтенд!',
+    url: 'https://kodzero.pro/docs/',
+    image: 'https://kodzero.pro/og-kodzero.png'
+}
+
 export default defineConfig({
     lang: 'ru-RU',
-    title: "Kodzero Docs",
-    description: "Документация - Kodzero Cloud Backend",
+    title: seoContent.title,
+    description: seoContent.description,
     lastUpdated: true,
     cleanUrls: true,
     base: '/docs/',
     head: [
+        ['meta', { property: 'og:title', content: seoContent.title }],
+        ['meta', { property: 'og:description', content: seoContent.description }],
+        ['meta', { property: 'og:type', content: 'website' }],
+        ['meta', { property: 'og:url', content: seoContent.url }],
+        ['meta', { property: 'og:image', content: seoContent.image }],
+        ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+        ['meta', { name: 'twitter:title', content: seoContent.title }],
+        ['meta', { name: 'twitter:description', content: seoContent.description }],
+        ['link', { rel: 'icon', href: '/docs/favicon.ico' }],
         [   
             'script',
             {},

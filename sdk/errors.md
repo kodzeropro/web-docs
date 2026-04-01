@@ -34,7 +34,7 @@ class KodzeroOptionsError extends Error {
 
 ```js
 try {
-  const kitten = await Kitten.get('non_existent_id')
+  const invoice = await Invoice.get('non_existent_id')
 } catch (error) {
   if (error.name === 'KodzeroApiError') {
     console.error('API ошибка:', error.message)
@@ -68,7 +68,7 @@ try {
         break
       case 404:
         // Не найдено
-        alert('Котёнок не найден')
+        alert('Документ не найден')
         break
       case 429:
         // Слишком много запросов

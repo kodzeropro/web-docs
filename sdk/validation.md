@@ -7,16 +7,16 @@ Kodzero SDK предоставляет встроенную валидацию �
 При создании модели укажите схему для валидации:
 
 ```js
-const kittenSchema = {
+const productSchema = {
   _id: { type: String },
-  name: { type: String },
-  color: { type: String, required: false},
-  age: { type: Number }
+  title: { type: String },
+  sku: { type: String },
+  price: { type: Number }
 }
 
-const Kitten = kodzero.createModel({
-  collection: 'kittens',
-  schema: kittenSchema
+const Product = kodzero.createModel({
+  collection: 'products',
+  schema: productSchema
 })
 ```
 
@@ -59,13 +59,13 @@ const schema2 = {
 Используйте метод `validate()` для проверки данных:
 
 ```js
-const kitten = new Kitten({
+const product = new Product({
   _id: null,
-  name: 'Барсик',
-  color: null // значение отсутствует
+  title: 'Беспроводные наушники',
+  price: null // значение отсутствует
 })
 
-const result = kitten.validate()
+const result = product.validate()
 
 if (result.ok) {
   console.log('Данные корректны')
@@ -90,11 +90,11 @@ if (result.ok) {
 Если модель создана без схемы, метод `validate()` выбросит ошибку:
 
 ```js
-const Kitten = kodzero.createModel<Kitten>({
-  collection: 'kittens'
+const Product = kodzero.createModel<Product>({
+  collection: 'products'
   // schema не указана
 })
 
-const kitten = new Kitten({ ... })
-kitten.validate() // Error: No schema defined for validation
+const product = new Product({ ... })
+product.validate() // Error: No schema defined for validation
 ```

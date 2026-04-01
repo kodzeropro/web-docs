@@ -9,13 +9,13 @@
 
 ```js
 // Первая страница, 10 записей
-const page1 = await Kitten.findMany({
+const page1 = await Product.findMany({
   page: 1,
   perPage: 10
 })
 
 // Вторая страница
-const page2 = await Kitten.findMany({
+const page2 = await Product.findMany({
   page: 2,
   perPage: 10
 })
@@ -27,10 +27,10 @@ const page2 = await Kitten.findMany({
 Для полноценной работы с пагинацией используйте `findManyPaginated`, который возвращает объект `PaginatedResult`:
 
 ```js
-const result = await Kitten.findManyPaginated({}, 1, 25)
+const result = await Product.findManyPaginated({}, 1, 25)
 
 // Данные
-console.log(result.data)  // массив котят
+console.log(result.data)  // массив товаров
 
 // Состояние пагинации
 console.log(result.state.page)       // текущая страница
@@ -57,7 +57,7 @@ console.log(result.state.left)       // осталось документов
 `PaginatedResult` предоставляет методы для навигации:
 
 ```js
-const result = await Kitten.findManyPaginated({}, 1, 25)
+const result = await Product.findManyPaginated({}, 1, 25)
 
 // Переход к следующей странице
 await result.next()
@@ -74,11 +74,11 @@ console.log(result.state.page)  // 1
 ### Простой список с пагинацией
 
 ```ts
-async function loadKittens(page: number = 1) {
-  const result = await Kitten.findManyPaginated({}, page, 25)
+async function loadProducts(page: number = 1) {
+  const result = await Product.findManyPaginated({}, page, 25)
   
   return {
-    kittens: result.data,
+    products: result.data,
     pagination: {...result.state}
   }
 }
@@ -88,11 +88,11 @@ async function loadKittens(page: number = 1) {
 Пагинацию можно комбинировать с другими параметрами запроса:
 
 ```js
-const result = await Kitten.findManyPaginated(
+const result = await Product.findManyPaginated(
   {
-    search: 'Барсик',
-    sort: '-age',
-    fields: ['name', 'color', 'age']
+    search: 'Наушники',
+    sort: '-price',
+    fields: ['title', 'price', 'status']
   },
   1,  // страница
   25  // на страницу
