@@ -10,7 +10,7 @@ hero:
     alt: Kodzero
   actions:
     - theme: brand
-      text: Быстрый старт 
+      text: Документация 
       link: /quickstart/
     - theme: alt
       text: На kodzero.pro → 

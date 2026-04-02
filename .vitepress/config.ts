@@ -50,6 +50,9 @@ export default defineConfig({
             dark: '/kodzero-docs-wh.png'
         },
         siteTitle: false,
+        footer: {
+            message: 'test'
+        },
         notFound: {
             title: 'Страница не найдена',
             quote: 'Похоже, вы перешли по неверной ссылке или страница была удалена.',
@@ -165,7 +168,7 @@ export default defineConfig({
         ],
         
         // @ts-ignore
-        supportEmail: 'support@kodzero.pro'
+        supportEmail: 'team@kodzero.pro'
     },
     sitemap: {
         hostname: 'https://kodzero.pro/docs/'
