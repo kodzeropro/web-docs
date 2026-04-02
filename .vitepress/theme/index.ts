@@ -10,6 +10,7 @@ import IconAlfa from '../components/IconAlfa.vue'
 import IconBeta from '../components/IconBeta.vue'
 import AuthorQuote from '../components/AuthorQuote.vue'
 import CrossLink from '../components/CrossLink.vue'
+import WhatAreTokens from '../components/wiki/WhatAreTokens.vue'
 
 export default {
     extends: DefaultTheme,
@@ -20,6 +21,7 @@ export default {
         app.component('IconBeta', IconBeta)
         app.component('AuthorQuote', AuthorQuote)
         app.component('CrossLink', CrossLink)
+        app.component('WhatAreTokens', WhatAreTokens)
     },
     setup() {
         const route = useRoute()

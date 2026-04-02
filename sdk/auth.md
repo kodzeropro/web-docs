@@ -1,167 +1,177 @@
 # Авторизация
 
-Модуль `auth` в SDK включает:
+::: tip :pushpin: Прежде, чем начать
+Для авторизации/аутентификации пользователя необходимо создать и настроить коллекцию специального типа — "Пользователи". Именно в ней будут храниться данные пользователей, а также осуществляться настройки авторизации.
+:::
+
+Модуль auth в SDK включает:
 
 - базовые методы авторизации;
-- стратегию `email + password`;
+- методы стратегий авторизации (в настоящий момент: `email + password`);
 - управление access/refresh токенами.
 
+<WhatAreTokens />
+
 ## Инициализация
+
+При создании образца kodzero, необходимо указать id коллекции, которая используется для хранения пользователей. Именно эта коллекция будет использоваться для авторизации.
 
 ```ts
 import Kodzero from 'kodzero-sdk'
 
 const kodzero = new Kodzero({
-    host: 'https://api.kodzero.pro/v1/10007',
-    authCollection: '100026',
-    autoRefreshToken: true
+    host: 'https://api.kodzero.pro/v1/10007', // хост + id вашего проекта
+    authCollection: '100026', // id коллекции типа "Пользователи"
+    autoRefreshToken: true // авто-обновление токенов при необходимости
 })
 
 export default kodzero
 ```
 
-## Тип данных пользователя
+После инициализации пользователь не авторизован — токены пусты.
 
-```ts
-interface AuthUser {
-    [ReservedKeyNames.ID]: string
-    [ReservedKeyNames.Email]: string
-    [ReservedKeyNames.Workspace]: string
-    [ReservedKeyNames.CreatedAt]: string
-    [ReservedKeyNames.UpdatedAt]: string
-    name: string
-    [key: string]: any
-}
+```
+console.log(kodzero.tokensManager)
+// TokensManagerClass { access: '', refresh: '' }
+
 ```
 
-## Вход (Email + Password)
+## Базовые методы и стратегии
+При создании коллекции вы можете настроить разные способы аутентификации, которые называются стратегиями. Каждая стратегия предлагает свой набор методов, соответствующий выбранному протоколу (например, email/пароль, OAuth, магическая ссылка). Однако независимо от выбранной стратегии, все методы делятся на две группы: базовые (доступны всегда) и специфичные (уникальные для конкретной стратегии).
 
-### Тип запроса
+::: tip Пример
+Например, регистрация по электронной почте и паролю отличается от регистрации через OAuth Яндекс. При этом выход из учетной записи (logout) будет работать одинаково (при помощи базового метода).
+:::
 
-```ts
-interface KodzeroAuthEmailLogin {
-    email: string
-    password: string
-}
-```
+## Базовые методы
+Базовые методы могут быть вызваны вне зависимости от того, какие стратегии вы используете.
 
-### Пример
+### Проверка токена (verify)
 
-```ts
-const credentials: KodzeroAuthEmailLogin = {
-    email: 'user@example.com',
-    password: 'StrongPassword123'
-}
-
-const loginResult = await kodzero.auth.email.login(credentials)
-```
-
-### Тип ответа
+Проверяет access-токен текущего пользовател (если вход уже был осуществлен).
 
 ```ts
-{
-    ok: true,
-    result: {
-        tokens: {
-            access: accessToken,
-            refresh: refreshToken,
-        },
-        session: sessionIndex,
-        [RecordedKeysHumanizedMap[ReservedFieldKeysNamesAuth.User]]: userDataNoPassword,
-    }
-}
+const verifyResult = await kodzero.auth.email.verify()
+console.log(verifyResult) // true / false
 ```
 
-## Выход
-
+<b>Тип ответа:</b>
 ```ts
-await kodzero.auth.logout()
+type VerifyResult = boolean
 ```
 
-## Регистрация
+### Обновление токена (refresh)
 
-### Тип запроса
-
-```ts
-export interface RegisterCredentials {
-    email: string
-    password: string
-    password2: string
-    name: string
-}
-```
-
-### Пример
-
-```ts
-const credentials: RegisterCredentials = {
-    email: 'user@example.com',
-    password: 'StrongPassword123',
-    password2: 'StrongPassword123',
-    name: 'Иван'
-}
-
-const registrationResult = await kodzero.auth.register(credentials)
-```
-
-### Тип ответа
-
-```ts
-{ ok: true, result: ... }
-
-const registerResult = {
-    user: createdUser, // User data Record<string, unknown>
-    tokens: loginResult.tokens, // {access: string, refresh: string }
-    session: loginResult.session, // number
-}
-```
-
-## Проверка токена (verify)
-
-Проверяет токен из заголовка `Authorization: Bearer ***`.
-
-### Пример
-
-```ts
-const verifyResult = (await kodzero.auth.email.verify()) as boolean
-```
-
-### Ожидаемый ответ
-
-```ts
-{ ok: true }
-```
-
-## Обновление токенов (refresh)
-
-Метод запрашивает новую пару токенов.
-
-### Пример
+Метод обновляет access-токен, используя текущий refresh-токен пользователя. Новый токен сразу же будет сохранен в текущем образце `kodzero`.
 
 ```ts
 const result = await kodzero.auth.email.refresh()
 ```
 
-### Ожидаемый input сервиса
-
+<b>Тип ответа:</b>
 ```ts
-const { refresh } = request.body
-```
-
-### Ожидаемый response сервиса
-
-```ts
-export type RefreshServiceResponse = Promise<{
+type RefreshResult = {
     tokens: {
         access: string;
         refresh: string;
     }
-}>
+}
+```
+
+#### Автоматическое обновление токена
+Обратите внимание, что при инициализации можно активировать автоматическое обновление токенов:
+
+``` ts {4}
+const kodzero = new Kodzero({
+    host: 'https://api.kodzero.pro/v1/10007/',
+    authCollection: "100026",
+    autoRefreshToken: true // ⬅️
+});
+```
+
+### Выход (logout)
+
+Аннулирует токен. Также заканчивает сессию на стороне клиента (в образце `kodzero`, в котором метод был вызван). После этого запросы текущего образца `kodzero` будут осуществляться как неавторизованные.
+
+```ts
+const logoutResult = await kodzero.auth.logout()
+console.log(logoutResult) // true / false
+```
+
+<b>Тип ответа:</b>
+```ts
+type LogoutResult = boolean
+```
+
+## Стратегии: Email-Password
+
+Для регистрации и входа используется адрес электронной почты и пароль.
+
+### Вход (login)
+
+Осуществляет вход пользователя в текущем образце `kodzero`. 
+
+В случае успеха: Токены доступа сохраняются автоматически. Текущий образец `kodzero` готов к осуществлению запросов от лица пользователя (без необходимости добавлять токены в заголовок запроса).
+
+```ts
+const credentials = {
+    email: 'user@example.com',
+    password: 'StrongPassword123'
+}
+
+try {
+    const loginResult = await kodzero.auth.email.login(credentials)
+} catch (error) {
+    console.log(error)
+}
+```
+
+<b>Тип ответа:</b>
+
+```ts
+type LoginResult = {
+    tokens: {
+        access: string,
+        refresh: string,
+    },
+    session: number,
+    user: Record<string, unknown>
+}
+```
+
+### Регистрация (register)
+
+Регистрация пользователя и вход в созданную учётную запись в текущем образце `kodzero`.
+
+В случае успеха: Токены доступа сохраняются автоматически. Текущий образец `kodzero` готов к осуществлению запросов от лица пользователя (без необходимости добавлять токены в заголовок запроса).
+
+```ts
+const credentials = {
+    email: 'user@example.com',
+    password: 'StrongPassword123',
+    password2: 'StrongPassword123',
+}
+
+const registrationResult = await kodzero.auth.register(credentials)
+```
+
+<b>Тип ответа:</b>
+```ts
+type RegisterResult = {
+    user: { ... }
+    tokens: {
+        access: string,
+        refresh: string
+    },
+    session: number
+}
 ```
 
 ## Работа с токенами
 
 ### Ручное управление
+
+При необходимости вы можете установить токены доступа или сбросить их вручую
 
 ```ts
 kodzero.auth.setTokens(access, refresh || '')
@@ -203,34 +213,93 @@ class TokensManagerClass {
 }
 ```
 
+## Данные пользователя
+
+```ts
+interface AuthUser {
+    // Технические автоматические поля:
+    _id: string
+    _identity: string
+    _workspace: string
+    _createdAt: string
+    _updatedAt: string
+    // Дополнительные поля вашей auth-коллекции:
+    // ...
+}
+```
+
 ## Полный сценарий
 
 ```ts
-const registrationResult = await kodzero.auth.register({
-    email: 'user@example.com',
-    password: 'StrongPassword123',
-    password2: 'StrongPassword123',
-    name: 'Иван'
-})
+// 1️⃣ Инициализация клиента
+const kodzero = new Kodzero({
+    host: 'https://api.kodzero.pro/v1/10007/',
+    authCollection: "100026"
+});
 
-const loginResult = await kodzero.auth.email.login({
-    email: 'user@example.com',
-    password: 'StrongPassword123'
-})
+// Токены пустые, клиент не авторизован
+console.log(kodzero.tokensManager)
+// TokensManagerClass { access: '', refresh: '' }
 
-kodzero.auth.setTokens(
-    loginResult.result.tokens.access,
-    loginResult.result.tokens.refresh
-)
+console.log(kodzero.tokensManager.hasAccess())
+// false
 
-const verifyResult = await kodzero.auth.email.verify()
+// 2️⃣ Проверка текущего токена клиента
+const verifyResult = await kodzero.auth?.email.verify();
+console.log('token verified:', verifyResult)
+// token verified: false
+// ✅ Всё верно, вход не был выполнен
 
-if (!verifyResult) {
-    await kodzero.auth.email.refresh()
+// 3️⃣ Регистрация нового пользователя
+const credentials = {
+    email: `new-user@test.com`,
+    password: 'n3W-paSSw0rd'
 }
 
-await kodzero.auth.logout()
-kodzero.auth.clearTokens()
+const registerResult = await kodzero.auth?.email.register(credentials);
+console.log('register result:', registerResult)
+// register result: { tokens: { access: '...', refresh: '...' }, user: { ... }, session: 1 }
+// ✅ Пользователь зарегистрирован; осуществлён вход
+
+// 4️⃣ Проверка токена после регистрации
+const verifyResult2 = await kodzero.auth?.email.verify();
+console.log('token verified:', verifyResult2)
+// token verified: true
+// ✅ Клиент авторизован
+
+console.log(kodzero.tokensManager)
+// TokensManagerClass { access: '...', refresh: '...' }
+
+// 5️⃣ Обновление текущего access-токена вручную
+const refreshResult = await kodzero.auth?.email.refresh();
+console.log('refresh result:', refreshResult)
+// refresh result: { tokens: { access: '...', refresh: '...' } }
+// ✅ Обновление токена выполнено успешно
+
+// 6️⃣ Выход из учетной записи пользователя
+const logoutResult = await kodzero.auth?.email.logout();
+console.log('logout result:', logoutResult)
+// logout result: true
+// ✅ Выход из учётной записи выполнен
+
+console.log(kodzero.tokensManager)
+// TokensManagerClass { access: '', refresh: '' }
+
+// 7️⃣ Вход с данными, используемыми ранее для регистрации пользователя
+const loginResult = await kodzero.auth?.email.login(credentials);
+console.log('loginResult:', loginResult)
+// loginResult: { tokens: { access: '...', refresh: '...' }, user: { ... }, session: 1 }
+// ✅ Клиент успешно авторизован
+
+// Любые запросы клиента (образца Kodzero SDK) будут осуществлены от лица текущего пользователя
+
+const Task = kodzero.createModel({
+  collection: '100033'
+})
+
+const newTask = new Task({title: 'Задача пользователя'})
+await newTask.save()
+// ✅ Запись создана
 ```
 
 
