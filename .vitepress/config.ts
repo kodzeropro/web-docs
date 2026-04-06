@@ -67,6 +67,11 @@ export default defineConfig({
             prev: 'Предыдущая страница',
             next: 'Следующая страница'
         },
+        sidebarMenuLabel: 'Меню',
+        darkModeSwitchLabel: 'Оформление',
+        lightModeSwitchTitle: 'Светлая тема',
+        darkModeSwitchTitle: 'Тёмная тема',
+        returnToTopLabel: 'Наверх',
         lastUpdated: {
             text: 'Обновлено'
         },
@@ -108,8 +113,9 @@ export default defineConfig({
                     { text: 'Логи', link: '/logs' }
                 ]
             },
+            
             { text: 'kodzero.pro', link: 'https://kodzero.pro/', target: '_blank', rel: 'noopener' },
-            // { component: 'IconBeta'} // custom component insert
+            { text: 'team@kodzero.pro', link: 'mailto:team@kodzero.pro/' },
         ],
         sidebar: [
         {
