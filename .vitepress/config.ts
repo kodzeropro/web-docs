@@ -103,6 +103,7 @@ export default defineConfig({
                     { text: 'Быстрый старт', link: '/quickstart' },
                     { text: 'Коллекции', link: '/collections' },
                     { text: 'API', link: '/api' },
+                    { text: 'Авторизация', link: '/auth' },
                     { text: 'SDK', link: '/sdk' },
                     { text: 'Логи', link: '/logs' }
                 ]
@@ -139,6 +140,13 @@ export default defineConfig({
                     { text: 'Delete', link: '/api/delete' },
                     { text: 'Ошибки', link: '/api/errors' }
                 ]
+        },
+        {
+            text: 'Авторизация',
+            items: [
+                { text: 'Введение', link: '/auth/' },
+                { text: 'Стратегии', link: '/auth/strategies' },
+            ]
         },
         {
             text: 'Kodzero SDK',
