@@ -9,7 +9,7 @@ declare module 'vitepress' {
 }
 
 const seoContent = {
-    title: 'Документация | Kodzero Docs',
+    title: 'Документация',
     description: 'Платформа для создания бэкенда за минуты. Визуальный конструктор, готовый REST API и админ-панель. Просто подключите фронтенд!',
     url: 'https://kodzero.pro/docs/',
     image: 'https://kodzero.pro/og-kodzero.png'
@@ -18,6 +18,7 @@ const seoContent = {
 export default defineConfig({
     lang: 'ru-RU',
     title: seoContent.title,
+    titleTemplate: ':title - Kodzero Docs',
     description: seoContent.description,
     lastUpdated: true,
     cleanUrls: true,
