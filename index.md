@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: "Kodzero.pro"
+  name: "kodzero.pro"
   text: "Облачный бэкенд для современных приложений"
   tagline: "Документация для пользователей"
   image:

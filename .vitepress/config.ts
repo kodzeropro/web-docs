@@ -52,7 +52,7 @@ export default defineConfig({
         },
         siteTitle: false,
         footer: {
-            message: 'test'
+            message: '<a href="mailto:team@kodzero.pro">team@kodzero.pro</a>'
         },
         notFound: {
             title: 'Страница не найдена',
@@ -153,6 +153,7 @@ export default defineConfig({
             items: [
                 { text: 'Введение', link: '/auth/' },
                 { text: 'Стратегии', link: '/auth/strategies' },
+                { text: 'Уровни доступа', link: '/auth/scopes' },
             ]
         },
         {

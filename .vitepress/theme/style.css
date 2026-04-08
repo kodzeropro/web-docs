@@ -22,24 +22,31 @@
   --vp-c-brand-soft-50: rgba(251, 44, 54, 0.5);
 }
 
+.VPHero {
+
+}
+
 /* Hero title size customization */
 .VPHero .name {
-  font-size: 2.25rem !important;
+  font-size: 1.15rem !important;
   font-weight: 600 !important;  
   line-height: 1.2 !important;
 }
 
 /* Hero text (subtitle) */
 .VPHero .text {
-  font-size: 2.25rem !important;
+  font-size: 2rem !important;
   font-weight: 600 !important;  
   line-height: 1.1 !important;
+  margin: 0.75rem 0 !important;
 }
 
 /* Hero tagline */
 .VPHero .tagline {
+  padding-top: 0 !important;
+  padding-bottom: 1rem !important;
   margin-top: 0 !important;
-  font-size: 1.25rem !important;
+  font-size: 1.1rem !important;
   font-weight: 500 !important;
 }
 
@@ -69,7 +76,7 @@
 }
 
 a[href="https://kodzero.pro/"].VPNavBarMenuLink {
-  font-weight: 600 !important;
+  /* font-weight: 600 !important; */
   /* color: red !important; */
 }
 
