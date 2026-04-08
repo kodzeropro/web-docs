@@ -152,6 +152,7 @@ export default defineConfig({
             items: [
                 { text: 'Введение', link: '/auth/' },
                 { text: 'Стратегии', link: '/auth/strategies' },
+                { text: 'Уровни доступа', link: '/auth/scopes' },
             ]
         },
         {
