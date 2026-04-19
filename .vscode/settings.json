@@ -1,5 +1,10 @@
 {
     "github-actions.workflows.pinned.workflows": [
         ".github/workflows/upload.yml"
+    ],
+    "github.copilot.chat.commitMessageGeneration.instructions": [
+        {
+            "text": "Всегда используй формат Conventional Commits: <тип>: <описание на русском языке>. Типы: feat, fix, refactor, chore, docs, ui, test, perf. Пример: fix: исправлена навигация по урокам курса. Описание должно быть кратким, ясным и на русском языке."
+        }
     ]
 }
