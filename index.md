@@ -6,7 +6,7 @@ hero:
   text: "Облачный бэкенд для современных приложений"
   tagline: "Документация для пользователей"
   image:
-    src: /kodzeropro.jpg
+    src: /kodzero-wiki.jpg
     alt: Kodzero
   actions:
     - theme: brand
