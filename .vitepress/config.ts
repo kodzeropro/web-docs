@@ -145,6 +145,7 @@ export default defineConfig({
                     { text: 'Create', link: '/api/create' },
                     { text: 'Update', link: '/api/update' },
                     { text: 'Delete', link: '/api/delete' },
+                    { text: 'Distinct', link: '/api/distinct' },
                     { text: 'Ошибки', link: '/api/errors' }
                 ]
         },

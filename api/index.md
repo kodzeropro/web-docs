@@ -43,6 +43,7 @@ Authorization: Bearer <token>
 | [Create](./create) | `POST /` | Создание записи |
 | [Update](./update) | `PATCH /:id` | Обновление записи по ID |
 | [Delete](./delete) | `DELETE /:id` | Удаление записи по ID |
+| [Distinct](./distinct) | `GET /distinct` | Уникальные значения по указанному полю |
 
 ## Формат ответа
 
