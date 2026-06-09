@@ -233,6 +233,15 @@ const deleted = await Product.delete('product_id')
 // deleted: true
 ```
 
+### distinct(field, options?)
+Возвращает уникальные значения поля по фильтру.
+
+```js
+const categories = await Product.distinct('category')
+
+console.log(categories) // ['audio', 'accessories']
+```
+
 ## Полный пример
 
 ```js
