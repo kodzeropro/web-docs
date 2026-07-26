@@ -181,7 +181,7 @@ export default defineConfig({
 
         socialLinks: [
             { icon: 'github', link: 'https://github.com/kodzeropro/docs' },
-            { icon: 'telegram', link: 'https://t.me/leshatourpro' },
+            { icon: 'telegram', link: 'https://t.me/kodzeropro' },
         ],
         
         // @ts-ignore

@@ -26,7 +26,7 @@ npm i kodzero-sdk
 import Kodzero from 'kodzero-sdk'
 
 const cl = new Kodzero({
-  host: 'https://api.kodzero.pro/your-project',
+  host: 'https://api.kodzero.pro/v1/your-project',
   authCollection: '100001'
 })
 
@@ -56,7 +56,7 @@ await record.delete()              // Delete
 const found = await RecordModel.get('id') // Return model instance
 const data = await RecordModel.find('id') // Return data object
 
-const list = await RecordModel.findMany({ page: 1, perPage: 25, search: 'string', fields: ['key1','key2'], sort: '-createdAt'})
+const list = await RecordModel.findMany({ page: 1, perPage: 25, search: 'string', fields: ['key1','key2'], sort: '-_createdAt'})
 // list: {"ok": true,"result": {"page": 1,"perPage": 25,"total": 0,"totalPages": 1,"found": []}}
 
 const res = await RecordModel.findManyPaginated({}, 1, 25)

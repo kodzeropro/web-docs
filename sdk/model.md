@@ -250,8 +250,8 @@ import Kodzero from 'kodzero-sdk'
 
 // Создаём экземпляр клиента
 const kodzero = new Kodzero({
-  host: 'https://api.kodzero.pro/demo',
-  authCollection: 'auth'
+  host: 'https://api.kodzero.pro/v1/1000',
+  authCollection: '20000'
 })
 
 // Описываем интерфейс данных (TypeScript)

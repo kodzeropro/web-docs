@@ -18,8 +18,8 @@ npm i kodzero-sdk
 import Kodzero from 'kodzero-sdk'
 
 const kodzero = new Kodzero({
-  host: 'https://api.kodzero.pro/:project',
-  authCollection: 'auth' // optional
+  host: 'https://api.kodzero.pro/v1/1000',
+  authCollection: '20000' // optional
 })
 ```
 

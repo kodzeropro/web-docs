@@ -15,7 +15,7 @@ GET /v1/:project/:collection
 | `search` | string | — | Поиск по текстовым полям |
 | `page` | number | `1` | Номер страницы |
 | `perPage` | number | `25` | Количество записей на странице |
-| `sort` | string | `createdAt` | Поле для сортировки. `-field` — по убыванию, `field` — по возрастанию |
+| `sort` | string | `_createdAt` | Поле для сортировки. `-field` — по убыванию, `field` — по возрастанию |
 | `fields` | string | — | Список полей для возврата, через запятую |
 | `include` | string | — | Список связанных записей для включения, через запятую |
 
@@ -40,8 +40,8 @@ GET https://api.kodzero.pro/v1/:project/:collection?search=футб&page=1&perPa
         "_id": "69c156e129d4e3fab000a215",
         "title": "Футболка",
         "price": 1499.99,
-        "createdAt": "2025-01-15T10:30:00Z",
-        "updatedAt": "2025-01-15T10:30:00Z"
+        "_createdAt": "2025-01-15T10:30:00Z",
+        "_updatedAt": "2025-01-15T10:30:00Z"
       }
     ]
   }

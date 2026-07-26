@@ -41,8 +41,8 @@ Content-Type: application/json
     "_id": "69c156e129d4e3fab000a265",
     "title": "Футболка",
     "price": 999,
-    "createdAt": "2025-01-15T10:30:00Z",
-    "updatedAt": "2025-01-15T10:30:00Z"
+    "_createdAt": "2025-01-15T10:30:00Z",
+    "_updatedAt": "2025-01-15T10:30:00Z"
   }
 }
 ```

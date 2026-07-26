@@ -27,8 +27,8 @@ GET https://api.kodzero.pro/v1/:project/:collection/:id
     "_id": "69c156e129d4e3fab000a264",
     "title": "Футболка",
     "price": 999,
-    "createdAt": "2025-01-15T10:30:00Z",
-    "updatedAt": "2025-01-15T10:30:00Z"
+    "_createdAt": "2025-01-15T10:30:00Z",
+    "_updatedAt": "2025-01-15T10:30:00Z"
   }
 }
 ```

@@ -22,7 +22,7 @@
 **Запрос:**
 
 ```http
-POST https://api.kodzero.pro/:projectId/:collectionId/:strategy/verify
+POST https://api.kodzero.pro/v1/:projectId/:collectionId/:strategy/verify
 Authorization: Bearer ACCESS_TOKEN
 ```
 
@@ -46,7 +46,7 @@ Authorization: Bearer ACCESS_TOKEN
 **Запрос:**
 
 ```http
-POST https://api.kodzero.pro/:projectId/:collectionId/:strategy/refresh
+POST https://api.kodzero.pro/v1/:projectId/:collectionId/:strategy/refresh
 Content-Type: application/json
 
 {
@@ -79,7 +79,7 @@ Content-Type: application/json
 **Запрос:**
 
 ```http
-POST https://api.kodzero.pro/:projectId/:collectionId/:strategy/logout
+POST https://api.kodzero.pro/v1/:projectId/:collectionId/:strategy/logout
 Authorization: Bearer ACCESS_TOKEN
 ```
 *body не требуется*
@@ -110,7 +110,7 @@ ID: `password`
 **Запроса:**
 
 ```http
-POST https://api.kodzero.pro/:projectId/:collectionId/password/register
+POST https://api.kodzero.pro/v1/:projectId/:collectionId/password/register
 Content-Type: application/json
 
 {
@@ -155,7 +155,7 @@ Content-Type: application/json
 **Запрос:**
 
 ```http
-POST https://api.kodzero.pro/:projectId/:collectionId/password/login
+POST https://api.kodzero.pro/v1/:projectId/:collectionId/password/login
 Content-Type: application/json
 
 {
