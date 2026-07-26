@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-import LibShared from '@lesha2r/kodzero-lib-shared-web'
+import LibShared from 'le2r-lib-kzsharaweb'
 
 // Расширяем тип темы для кастомных свойств
 declare module 'vitepress' {
