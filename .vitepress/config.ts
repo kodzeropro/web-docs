@@ -110,6 +110,7 @@ export default defineConfig({
                     { text: 'Коллекции', link: '/collections' },
                     { text: 'API', link: '/api' },
                     { text: 'Авторизация', link: '/auth' },
+                    { text: 'Серверная интеграция', link: '/server-integration' },
                     { text: 'SDK', link: '/sdk' },
                     { text: 'Логи', link: '/logs' }
                 ]
@@ -155,6 +156,18 @@ export default defineConfig({
                 { text: 'Введение', link: '/auth/' },
                 { text: 'Стратегии', link: '/auth/strategies' },
                 { text: 'Уровни доступа', link: '/auth/scopes' },
+            ]
+        },
+        {
+            text: 'Серверная интеграция',
+            items: [
+                { text: 'Введение', link: '/server-integration/' },
+                { text: 'Когда использовать', link: '/server-integration/when-to-use' },
+                { text: 'Admin API-ключ', link: '/server-integration/admin-api-key' },
+                { text: 'Выполнение запросов', link: '/server-integration/requests' },
+                { text: 'Права доступа', link: '/server-integration/permissions' },
+                { text: 'Безопасность', link: '/server-integration/security' },
+                { text: 'Возможные ошибки', link: '/server-integration/errors' }
             ]
         },
         {
