@@ -36,6 +36,7 @@ Kodzero REST API
 
 - [Когда использовать](./when-to-use)
 - [Admin API-ключ](./admin-api-key)
+- [Аутентификация пользователей](./user-auth)
 - [Выполнение запросов](./requests)
 - [Права доступа](./permissions)
 - [Безопасность](./security)

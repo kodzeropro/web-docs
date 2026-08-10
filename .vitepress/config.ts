@@ -164,6 +164,7 @@ export default defineConfig({
                 { text: 'Введение', link: '/server-integration/' },
                 { text: 'Когда использовать', link: '/server-integration/when-to-use' },
                 { text: 'Admin API-ключ', link: '/server-integration/admin-api-key' },
+                { text: 'Аутентификация пользователей', link: '/server-integration/user-auth' },
                 { text: 'Выполнение запросов', link: '/server-integration/requests' },
                 { text: 'Права доступа', link: '/server-integration/permissions' },
                 { text: 'Безопасность', link: '/server-integration/security' },
