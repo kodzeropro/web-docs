@@ -95,7 +95,7 @@ GET /v1/:project/:collection?sort=price
 GET /v1/:project/:collection?sort=-price
 
 # По дате создания (по умолчанию)
-GET /v1/:project/:collection?sort=createdAt
+GET /v1/:project/:collection?sort=_createdAt
 ```
 
 ## Выбор полей

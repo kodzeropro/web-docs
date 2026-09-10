@@ -22,8 +22,8 @@ interface Product {
   sku: string
   price: number
   status?: 'draft' | 'active' | 'archived'
-  createdAt?: Date
-  updatedAt?: Date
+  _createdAt?: Date
+  _updatedAt?: Date
 }
 
 // Создаём типизированную модель
@@ -175,7 +175,7 @@ const products = await Product.findMany({
   page: 1,
   perPage: 25,
   search: 'Наушники',
-  sort: '-createdAt',  // минус означает по убыванию
+  sort: '-_createdAt',  // минус означает по убыванию
   fields: ['title', 'price']  // только указанные поля
 })
 ```
