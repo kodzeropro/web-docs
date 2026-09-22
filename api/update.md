@@ -23,6 +23,8 @@ JSON-объект с полями, которые нужно обновить. �
 }
 ```
 
+<UserCollectionApiNotice method="Update" />
+
 ## Пример запроса
 
 ```http

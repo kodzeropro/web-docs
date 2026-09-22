@@ -2,6 +2,8 @@
 
 Создание новой записи в коллекции.
 
+<UserCollectionApiNotice method="Create" />
+
 ## Запрос
 
 ```http
@@ -82,6 +84,4 @@ Content-Type: application/json
 }
 ```
 
-При scope `User` запись автоматически привязывается к текущему пользователю.
-
-При `Workspace` — к текущему workspace.
+При scope `User` запись автоматически привязывается к текущему пользователю. При `Workspace` — к текущему workspace.

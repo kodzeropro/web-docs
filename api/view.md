@@ -59,6 +59,4 @@ GET https://api.kodzero.pro/v1/:project/:collection/:id
 
 **HTTP статус:** `401`
 
-При scope `User` запись автоматически привязывается к текущему пользователю.
-
-При `Workspace` — к текущему workspace.
+При scope `User` запись автоматически привязывается к текущему пользователю. При `Workspace` — к текущему workspace.

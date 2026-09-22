@@ -15,6 +15,7 @@ import WhatAreTokens from '../components/wiki/WhatAreTokens.vue'
 import DocsButton from '../components/DocsButton.vue'
 import IconGithub from '../components/IconGithub.vue'
 import IconNpm from '../components/IconNpm.vue'
+import UserCollectionApiNotice from '../components/UserCollectionApiNotice.vue'
 
 export default {
     extends: DefaultTheme,
@@ -29,6 +30,7 @@ export default {
         app.component('DocsButton', DocsButton)
         app.component('IconGithub', IconGithub)
         app.component('IconNpm', IconNpm)
+        app.component('UserCollectionApiNotice', UserCollectionApiNotice)
     },
     setup() {
         const route = useRoute()

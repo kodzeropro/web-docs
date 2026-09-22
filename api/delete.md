@@ -2,6 +2,8 @@
 
 Удаление записи по идентификатору.
 
+<UserCollectionApiNotice method="Delete" />
+
 ## Запрос
 
 ```http

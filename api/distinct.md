@@ -4,6 +4,8 @@
 
 Метод полезен для построения UI-фильтров, например: список всех брендов (`brand`), категорий (`category`) или статусов (`status`).
 
+<UserCollectionApiNotice method="Distinct" />
+
 ## Запрос
 
 ```http
