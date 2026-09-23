@@ -27,13 +27,7 @@ const methodLabel = computed(() => props.method ? `Метод ${props.method}` :
 
         <template v-else>
             <p>
-                Методы <code>Create</code>, <code>Delete</code> и <code>Distinct</code> недоступны.
-                Для создания пользователя используйте
-                <a :href="registrationUrl">Email/Password → Регистрация</a>.
-            </p>
-            <p>
-                Осторожно назначайте доступность <code>Public</code>: такой метод можно вызвать без
-                авторизации. Не открывайте публичный доступ к просмотру или изменению пользовательских данных.
+                Методы <code>Create</code>, <code>Delete</code> и <code>Distinct</code> недоступны в коллекциях типа <b>Пользователи</b>.
             </p>
         </template>
     </aside>
